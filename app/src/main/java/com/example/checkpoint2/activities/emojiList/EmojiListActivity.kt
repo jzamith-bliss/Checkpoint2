@@ -3,6 +3,7 @@ package com.example.checkpoint2.activities.emojiList
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.checkpoint2.adapter.AdapterEmojis
@@ -24,6 +25,7 @@ class EmojiListActivity : AppCompatActivity() {
         binding = ActivityEmojiListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val recyclerView = binding.recyclerView
+        binding.viewModel = viewModel
 
         //viewModel.emojis.observe(this){}
 
@@ -34,7 +36,7 @@ class EmojiListActivity : AppCompatActivity() {
 
         adapter = AdapterEmojis(this, viewModel.emojiList)
         recyclerView.adapter = adapter
-
+        Log.v("SIZE", viewModel.emojiList.size.toString())
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         //recyclerView.setHasFixedSize(true)
@@ -45,7 +47,7 @@ class EmojiListActivity : AppCompatActivity() {
         //add listener for refresh
         refresh.setOnRefreshListener {
             //refresh data with original dataset
-            viewModel.refreshData()
+            //viewModel.refreshData()
             //notify the adapter about the data set changes
             adapter.notifyDataSetChanged()
             //stop refreshing

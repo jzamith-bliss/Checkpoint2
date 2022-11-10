@@ -5,12 +5,8 @@ import androidx.lifecycle.*
 
 import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Emoji
-import com.example.checkpoint2.network.EmojiApi
 import com.example.checkpoint2.network.EmojisNetwork
-import com.example.checkpoint2.network.asEmoji
-import com.example.checkpoint2.network.asEmojiData
 import com.example.checkpoint2.repository.EmojiRepository
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class EmojiListViewModel(application: Application): AndroidViewModel(application) {
@@ -37,26 +33,9 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
             catch (e: Exception) {
                 e.printStackTrace()
                 //_status.value = EmojiApiStatus.ERROR
-                setEmojiList()
             }
         }
     }
-
-
-    fun setEmojiList() {
-       //_emojiList = databaseEmojis.value!!
-    }
-
-    fun onEmojiItemClick(position: Int) {
-
-        //_currentEmojiList.removeAt(position)
-    }
-
-    fun refreshData() {
-        //_currentEmojiList.clear()
-        //_currentEmojiList.addAll(myDataset)
-    }
-
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {

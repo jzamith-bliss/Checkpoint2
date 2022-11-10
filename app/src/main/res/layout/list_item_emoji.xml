@@ -23,11 +23,11 @@
     </data>
     <ImageView
         app:emojiUrl="@{emoji.emojiUrl}"
-        android:layout_width="50dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:padding="2dp"
         android:id="@+id/item_image"
-        android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="20dp"
-        tools:src="@tools:sample/backgrounds/scenic"/>
+        android:importantForAccessibility="no" />
 </layout>

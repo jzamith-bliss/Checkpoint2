@@ -2,21 +2,15 @@ package com.example.checkpoint2.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
-
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
-import com.example.checkpoint2.R
 import com.example.checkpoint2.databinding.ListItemEmojiBinding
 import com.example.checkpoint2.model.Emoji
 
 class AdapterEmojis(
     private val context: Context,
-    //private val dataset: LiveData<List<Emoji>>,
     private val dataset: List<Emoji>,
     //private val listener: AdapterView.OnItemClickListener
 ) : ListAdapter<Emoji, AdapterEmojis.ItemViewHolder>(DiffCallback) {
@@ -25,25 +19,6 @@ class AdapterEmojis(
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just an Affirmation object.
-
-/*    inner class ItemViewHolder(
-        private val view: View
-        ) : RecyclerView.ViewHolder(view),
-    View.OnClickListener{
-        val imageView: ImageView = view.findViewById(R.id.item_image)
-
-        init {
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(v: View?) {
-            val position = adapterPosition
-            if (position !=
-                RecyclerView.NO_POSITION) {
-                listener.onItemClick(position)
-            }
-        }
-    }*/
 
     class ItemViewHolder(
         private var binding: ListItemEmojiBinding
@@ -74,10 +49,6 @@ class AdapterEmojis(
         viewType: Int
     ): ItemViewHolder {
         // create a new view
- /*       val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item_emoji, parent, false)
-
-        return ItemViewHolder(adapterLayout)*/
         return ItemViewHolder(
             ListItemEmojiBinding.inflate(LayoutInflater.from(parent.context))
         )
@@ -93,14 +64,4 @@ class AdapterEmojis(
         val emojiPhoto = getItem(position)
         holder.bind(emojiPhoto)
     }
-
-    /**
-     * Return the size of your dataset (invoked by the layout manager)
-     */
-    ////override fun getItemCount() = dataset.size
-    //override fun getItemCount() = dataset.value!!.size
-
- /*   interface OnItemClickListener {
-        fun onItemClick(position:Int)
-    }*/
 }
