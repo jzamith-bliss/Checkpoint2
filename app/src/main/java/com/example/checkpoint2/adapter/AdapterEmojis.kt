@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.checkpoint2.R
 import com.example.checkpoint2.model.Emoji
 
 class AdapterEmojis(
     private val context: Context,
+    //private val dataset: LiveData<List<Emoji>>,
     private val dataset: List<Emoji>,
     private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<AdapterEmojis.ItemViewHolder>() {
@@ -51,6 +53,7 @@ class AdapterEmojis(
      * Replace the contents of a view (invoked by the layout manager)
      */
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        //val item = dataset.value?.get(position)
         val item = dataset[position]
         //holder.imageView.setImageResource(item.imageResourceId)
     }
@@ -59,6 +62,7 @@ class AdapterEmojis(
      * Return the size of your dataset (invoked by the layout manager)
      */
     override fun getItemCount() = dataset.size
+    //override fun getItemCount() = dataset.value!!.size
 
     interface OnItemClickListener {
         fun onItemClick(position:Int)

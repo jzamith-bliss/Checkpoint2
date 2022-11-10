@@ -3,8 +3,6 @@ package com.example.checkpoint2.activities.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -74,7 +72,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onRandomEmoji() {
-        viewModel.randomImg()
+        viewModel.setNewRandomEmoji()
     }
 
 

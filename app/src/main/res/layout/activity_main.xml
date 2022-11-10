@@ -1,99 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.main.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.checkpoint2.activities.main.MainActivityViewModel" />
+    </data>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/random_emoji"
-        app:layout_constraintBottom_toTopOf="@+id/button_random_emoji"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.checkpoint2.activities.main.MainActivity">
 
-    <Button
-        android:id="@+id/button_random_emoji"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/random_emoji"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.284"
-        tools:ignore="DuplicateSpeakableTextCheck" />
-
-    <Button
-        android:id="@+id/button_emoji_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="@string/emoji_list"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_random_emoji"
-        app:layout_constraintVertical_bias="0.041" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        android:layout_width="309dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-50dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_avatar_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_emoji_list">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:hint="@string/insert_github_username" />
+            android:contentDescription="@string/random_emoji"
+            app:layout_constraintBottom_toTopOf="@+id/button_random_emoji"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:emojiApiStatus="@{viewModel.status}"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <Button
+            android:id="@+id/button_random_emoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/random_emoji"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.284"
+            tools:ignore="DuplicateSpeakableTextCheck" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:layout_marginStart="300dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/button_avatar_list"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/button_emoji_list"
-        app:srcCompat="@android:drawable/ic_menu_search"
-        android:focusable="true"
-        android:contentDescription="@string/insert_github_username" />
+        <Button
+            android:id="@+id/button_emoji_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/emoji_list"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_random_emoji"
+            app:layout_constraintVertical_bias="0.041" />
 
-    <Button
-        android:id="@+id/button_avatar_list"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:text="@string/avatar_list"
-        app:layout_constraintBottom_toTopOf="@+id/button_google_repos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            android:layout_width="309dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-50dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_avatar_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_emoji_list">
 
-    <Button
-        android:id="@+id/button_google_repos"
-        android:layout_width="240dp"
-        android:layout_height="50dp"
-        android:text="@string/google_repos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_avatar_list" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="@string/insert_github_username" />
 
+        </com.google.android.material.textfield.TextInputLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="350dp"
+            android:layout_marginStart="300dp"
+            android:clickable="true"
+            app:layout_constraintBottom_toTopOf="@+id/button_avatar_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/button_emoji_list"
+            app:srcCompat="@android:drawable/ic_menu_search"
+            android:focusable="true"
+            android:contentDescription="@string/insert_github_username" />
+
+        <Button
+            android:id="@+id/button_avatar_list"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:text="@string/avatar_list"
+            app:layout_constraintBottom_toTopOf="@+id/button_google_repos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+
+        <Button
+            android:id="@+id/button_google_repos"
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:text="@string/google_repos"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_avatar_list" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

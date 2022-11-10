@@ -2,23 +2,50 @@ package com.example.checkpoint2.activities.emojiList
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.checkpoint2.activities.main.EmojiApiStatus
 import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Emoji
+import com.example.checkpoint2.network.EmojiApi
+import com.example.checkpoint2.network.EmojisNetwork
+import com.example.checkpoint2.network.asEmoji
+import com.example.checkpoint2.network.asEmojiData
 import com.example.checkpoint2.repository.EmojiRepository
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
-enum class EmojiApiStatus { LOADING, ERROR, DONE }
+class EmojiListViewModel(application: Application): AndroidViewModel(application) {
 
-class EmojiListViewModel(emojiListApplication: Application): AndroidViewModel(emojiListApplication) {
+    private val emojiRepository = EmojiRepository(EmojiRoomDatabase.getDatabase(application))
+    val databaseEmojis:LiveData<List<Emoji>> = emojiRepository.emojis
 
-    private val emojiRepository = EmojiRepository(EmojiRoomDatabase.getDatabase(emojiListApplication))
-    val emojis:LiveData<List<Emoji>> = emojiRepository.emojis
+    private var _emojiList: MutableList<Emoji> = mutableListOf()
+    val emojiList: List<Emoji>
+        get() = _emojiList
 
-    private var _currentEmojiList: LiveData<List<Emoji>> =
-        emojis
-    val currentEmojiList: LiveData<List<Emoji>>
-        get() = _currentEmojiList
 
+    fun initializeEmojiListData(onCompletion: () -> Unit ) {
+        viewModelScope.launch {
+            try {
+                //emojiRepository.refreshEmojis()
+                if (emojiList.isEmpty()) {
+                    //setEmojiList()
+                    _emojiList.addAll(EmojisNetwork.getEmojisNetwork())
+                    onCompletion()
+                    //getEmojiListFromNetwork()
+                }
+            }
+            catch (e: Exception) {
+                e.printStackTrace()
+                //_status.value = EmojiApiStatus.ERROR
+                setEmojiList()
+            }
+        }
+    }
+
+
+    fun setEmojiList() {
+       //_emojiList = databaseEmojis.value!!
+    }
 
     fun onEmojiItemClick(position: Int) {
 
@@ -28,15 +55,6 @@ class EmojiListViewModel(emojiListApplication: Application): AndroidViewModel(em
     fun refreshData() {
         //_currentEmojiList.clear()
         //_currentEmojiList.addAll(myDataset)
-    }
-
-    fun initializeMainData() {
-        viewModelScope.launch {
-            try {
-                emojiRepository.refreshEmojis()
-            }
-            catch (e: Exception) { e.printStackTrace() }
-        }
     }
 
 

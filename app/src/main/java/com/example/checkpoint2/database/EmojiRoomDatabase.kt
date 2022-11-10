@@ -30,6 +30,7 @@ abstract class EmojiRoomDatabase : RoomDatabase() {
                     .build()
                 INSTANCE = instance
                 return instance
+
             }
         }
 
