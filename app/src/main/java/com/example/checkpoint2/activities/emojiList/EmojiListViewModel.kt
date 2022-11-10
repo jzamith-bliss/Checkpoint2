@@ -2,7 +2,7 @@ package com.example.checkpoint2.activities.emojiList
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.checkpoint2.activities.main.EmojiApiStatus
+
 import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Emoji
 import com.example.checkpoint2.network.EmojiApi

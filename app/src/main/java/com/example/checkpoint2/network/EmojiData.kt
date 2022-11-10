@@ -19,4 +19,4 @@ data class EmojiData(
 
 )
 
-fun List<EmojiData>.asEmoji(): List<Emoji> { return map { Emoji(emojiUrl = it.emojiUrl) } }
+fun List<EmojiData>.asEmoji(): List<Emoji> { return map { Emoji(it.emojiName ,emojiUrl = it.emojiUrl) } }

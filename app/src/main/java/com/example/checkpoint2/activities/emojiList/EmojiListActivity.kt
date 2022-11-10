@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.checkpoint2.adapter.AdapterEmojis
 import com.example.checkpoint2.databinding.ActivityEmojiListBinding
 
-class EmojiListActivity : AppCompatActivity(), AdapterEmojis.OnItemClickListener {
+class EmojiListActivity : AppCompatActivity() {
     private val viewModel: EmojiListViewModel by viewModels()
 
 /*    private val viewModel: EmojiListViewModel by lazy {
@@ -33,7 +32,7 @@ class EmojiListActivity : AppCompatActivity(), AdapterEmojis.OnItemClickListener
         //}
         viewModel.initializeEmojiListData { adapter.notifyDataSetChanged() }
 
-        adapter = AdapterEmojis(this, viewModel.emojiList, this)
+        adapter = AdapterEmojis(this, viewModel.emojiList)
         recyclerView.adapter = adapter
 
         // Use this setting to improve performance if you know that changes
@@ -55,9 +54,9 @@ class EmojiListActivity : AppCompatActivity(), AdapterEmojis.OnItemClickListener
 
     }
 
-     override fun onItemClick(position: Int) {
+     /*override fun onItemClick(position: Int) {
         //viewModel.onEmojiItemClick(position)
         adapter.notifyItemRemoved(position)
-    }
+    }*/
 
 }

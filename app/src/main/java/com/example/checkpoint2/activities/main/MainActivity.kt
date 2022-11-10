@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         ViewModelProvider(this, MainActivityViewModel.Factory(this.application))[MainActivityViewModel::class.java]
     }
     //private val viewModel: MainActivityViewModel by viewModels()
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

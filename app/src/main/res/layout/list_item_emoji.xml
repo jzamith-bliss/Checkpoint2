@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
@@ -11,4 +11,23 @@
         android:importantForAccessibility="no"
         android:scaleType="centerCrop"
         android:layout_marginBottom="20dp"/>
-</LinearLayout>
+</LinearLayout>-->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="emoji"
+            type="com.example.checkpoint2.model.Emoji" />
+    </data>
+    <ImageView
+        app:emojiUrl="@{emoji.emojiUrl}"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/item_image"
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="20dp"
+        tools:src="@tools:sample/backgrounds/scenic"/>
+</layout>
