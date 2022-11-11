@@ -3,16 +3,16 @@ package com.example.checkpoint2.activities.emojiList
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.checkpoint2.adapter.AdapterEmojis
 import com.example.checkpoint2.databinding.ActivityEmojiListBinding
+import com.example.checkpoint2.model.Emoji
 
-class EmojiListActivity : AppCompatActivity() {
+class EmojiListActivity : AppCompatActivity(),AdapterEmojis.EmojiClickListener {
     private val viewModel: EmojiListViewModel by viewModels()
 
-/*    private val viewModel: EmojiListViewModel by lazy {
+    /*    private val viewModel: EmojiListViewModel by lazy {
         val activity = requireNotNull(this) {}
         ViewModelProvider(this, EmojiListViewModel.Factory(this.application))[EmojiListViewModel::class.java]
     }*/
@@ -34,9 +34,8 @@ class EmojiListActivity : AppCompatActivity() {
         //}
         viewModel.initializeEmojiListData { adapter.notifyDataSetChanged() }
 
-        adapter = AdapterEmojis(this, viewModel.emojiList)
+        adapter = AdapterEmojis(this, viewModel.emojiList, this)
         recyclerView.adapter = adapter
-        Log.v("SIZE", viewModel.emojiList.size.toString())
         // Use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
         //recyclerView.setHasFixedSize(true)
@@ -47,7 +46,7 @@ class EmojiListActivity : AppCompatActivity() {
         //add listener for refresh
         refresh.setOnRefreshListener {
             //refresh data with original dataset
-            //viewModel.refreshData()
+            viewModel.refreshData()
             //notify the adapter about the data set changes
             adapter.notifyDataSetChanged()
             //stop refreshing
@@ -56,9 +55,10 @@ class EmojiListActivity : AppCompatActivity() {
 
     }
 
-     /*override fun onItemClick(position: Int) {
-        //viewModel.onEmojiItemClick(position)
-        adapter.notifyItemRemoved(position)
-    }*/
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onEmojiClicked(emoji: Emoji) {
+        viewModel.onEmojiItemClick(emoji, { adapter.notifyDataSetChanged() })
+    }
+
 
 }

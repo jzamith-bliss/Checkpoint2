@@ -12,7 +12,7 @@ import com.example.checkpoint2.model.Emoji
 class AdapterEmojis(
     private val context: Context,
     private val dataset: List<Emoji>,
-    //private val listener: AdapterView.OnItemClickListener
+    private val mListener: EmojiClickListener
 ) : ListAdapter<Emoji, AdapterEmojis.ItemViewHolder>(DiffCallback) {
     // Item click Listener - https://www.youtube.com/watch?v=wKFJsrdiGS8
     // Provide a reference to the views for each data item
@@ -20,13 +20,13 @@ class AdapterEmojis(
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just an Affirmation object.
 
-    class ItemViewHolder(
-        private var binding: ListItemEmojiBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(emojiPhoto: Emoji) {
+    class ItemViewHolder(val binding: ListItemEmojiBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(emojiPhoto: Emoji, listener : EmojiClickListener) {
             binding.emoji = emojiPhoto
             // This is important, because it forces the data binding to execute immediately,
             // which allows the RecyclerView to make the correct view size measurements
+            binding.emojiClick = listener
             binding.executePendingBindings()
         }
     }
@@ -62,6 +62,12 @@ class AdapterEmojis(
         //val item = dataset[position]
         //holder.imageView.setImageResource(item.imageResourceId)
         val emojiPhoto = getItem(position)
-        holder.bind(emojiPhoto)
+        holder.bind(emojiPhoto, mListener)
+    }
+
+    override fun getItemCount(): Int = dataset.size
+
+    interface EmojiClickListener {
+        fun onEmojiClicked(emoji: Emoji)
     }
 }

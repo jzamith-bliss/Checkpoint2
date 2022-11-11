@@ -20,7 +20,11 @@
         <variable
             name="emoji"
             type="com.example.checkpoint2.model.Emoji" />
+        <variable
+            name="emojiClick"
+            type="com.example.checkpoint2.adapter.AdapterEmojis.EmojiClickListener" />
     </data>
+
     <ImageView
         app:emojiUrl="@{emoji.emojiUrl}"
         android:layout_width="wrap_content"
@@ -29,5 +33,6 @@
         android:adjustViewBounds="true"
         android:padding="2dp"
         android:id="@+id/item_image"
-        android:importantForAccessibility="no" />
+        android:importantForAccessibility="no"
+        android:onClick="@{() ->  emojiClick.onEmojiClicked(emoji)}"/>
 </layout>

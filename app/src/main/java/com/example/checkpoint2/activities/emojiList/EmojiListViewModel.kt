@@ -18,6 +18,10 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
     val emojiList: List<Emoji>
         get() = _emojiList
 
+    private var _persistentEmojiList: MutableList<Emoji> = mutableListOf()
+    val persistentEmojiList: List<Emoji>
+        get() = _persistentEmojiList
+
 
     fun initializeEmojiListData(onCompletion: () -> Unit ) {
         viewModelScope.launch {
@@ -26,6 +30,7 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
                 if (emojiList.isEmpty()) {
                     //setEmojiList()
                     _emojiList.addAll(EmojisNetwork.getEmojisNetwork())
+                    _persistentEmojiList.addAll(EmojisNetwork.getEmojisNetwork())
                     onCompletion()
                     //getEmojiListFromNetwork()
                 }
@@ -35,6 +40,17 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
                 //_status.value = EmojiApiStatus.ERROR
             }
         }
+    }
+
+    fun onEmojiItemClick(emoji: Emoji, onCompletion: () -> Unit) {
+        //Toast.makeText(this, "Item ${emoji.emojiUrl} clicked", Toast.LENGTH_SHORT).show()
+        _emojiList.remove(emoji)
+        onCompletion()
+    }
+
+    fun refreshData() {
+        _emojiList.clear()
+        _emojiList.addAll(persistentEmojiList)
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

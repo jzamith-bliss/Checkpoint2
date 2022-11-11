@@ -8,6 +8,7 @@ object EmojisNetwork {
     }
 }
 
+//TODO: GetEmojiList criar
 object EmojisDatabase {
     //private val emojiRepository = EmojiRepository(EmojiRoomDatabase.getDatabase())
     //val databaseEmojis: LiveData<List<Emoji>> = emojiRepository.emojis
