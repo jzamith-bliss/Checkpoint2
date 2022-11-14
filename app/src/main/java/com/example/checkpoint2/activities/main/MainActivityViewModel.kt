@@ -2,13 +2,19 @@ package com.example.checkpoint2.activities.main
 
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
-import com.example.checkpoint2.repository.EmojiRepository
+import com.example.checkpoint2.database.AvatarsRoomDatabase
+import com.example.checkpoint2.repository.EmojiManager
 import com.example.checkpoint2.database.EmojiRoomDatabase
+import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.model.Emoji
+import com.example.checkpoint2.network.AvatarData
 import com.example.checkpoint2.network.EmojiApi
 import com.example.checkpoint2.network.asEmoji
 import com.example.checkpoint2.network.asEmojiData
+import com.example.checkpoint2.repository.AvatarManager
+import com.example.checkpoint2.repository.AvatarsNetwork
 import kotlinx.coroutines.launch
 
 
@@ -22,13 +28,19 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
     // The external immutable LiveData for the request status
     val status: LiveData<EmojiApiStatus> = _status
 
-    private val emojiRepository = EmojiRepository(EmojiRoomDatabase.getDatabase(application))
+    private val emojiRepository = EmojiManager(EmojiRoomDatabase.getDatabase(application))
     val emojis:LiveData<List<Emoji>> = emojiRepository.emojis
+
+    //private val avatarRepository = AvatarManager(AvatarsRoomDatabase.getDatabase(application))
+    //val avatars:LiveData<List<AvatarData>> = avatarRepository.avatars
 
     private var _currentRandomEmoji = MutableLiveData<Emoji>()
     val currentRandomEmoji: LiveData<Emoji>
         get() = _currentRandomEmoji
 
+    private var _usernameAvatar = MutableLiveData<Avatar>()
+    val usernameAvatar: LiveData<Avatar>
+        get() = _usernameAvatar
 
     fun initializeMainData() {
         viewModelScope.launch {
@@ -57,6 +69,15 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
         _currentRandomEmoji.value = emojis.value!![(emojis.value!!.indices).random()]
     }
 
+    fun getGitHubUsername(username: String) {
+        viewModelScope.launch {
+            val avatar = AvatarsNetwork.getAvatarsNetwork(username)
+            _usernameAvatar.value = avatar
+            //avatarRepository.refreshAvatars(username)
+
+        }
+        //Log.v("AV", "Avatars Viewmodel ${avatars.value?.size}")
+    }
     /**
      * Factory for constructing DevByteViewModel with parameter
      */

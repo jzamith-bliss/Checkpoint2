@@ -1,7 +1,8 @@
 package com.example.checkpoint2.model
 
-import androidx.annotation.DrawableRes
+import com.squareup.moshi.Json
 
 data class Avatar (
-    @DrawableRes val imageResourceId: Int
+    val id: String,
+    @Json(name = "avatar_url") val avatarUrl: String // ? = null serve para se não receber nada dá null
 )

@@ -5,13 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Emoji
-import com.example.checkpoint2.network.EmojiApi
-import com.example.checkpoint2.network.asEmoji
-import com.example.checkpoint2.network.asEmojiData
+import com.example.checkpoint2.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class EmojiRepository(private val database: EmojiRoomDatabase) {
+class EmojiManager(private val database: EmojiRoomDatabase) {
 
     //private var _emojis = MutableLiveData<List<Emoji>>()
     //val emojis: LiveData<List<Emoji>>
@@ -33,3 +31,10 @@ class EmojiRepository(private val database: EmojiRoomDatabase) {
     }
 
 }
+
+object EmojisNetwork {
+    suspend fun getEmojisNetwork(): List<Emoji> {
+        return EmojiApi.retrofitService.getEmojis().asEmojiData().asEmoji()//.toMutableList()
+    }
+}
+

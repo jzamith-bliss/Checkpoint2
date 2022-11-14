@@ -38,7 +38,7 @@ class AdapterAvatar(
      */
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = dataset[position]
-        holder.imageView.setImageResource(item.imageResourceId)
+        holder.imageView.setImageResource(position)
     }
 
     /**

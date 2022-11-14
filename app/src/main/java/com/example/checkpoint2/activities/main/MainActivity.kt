@@ -3,6 +3,10 @@ package com.example.checkpoint2.activities.main
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
+import android.view.View
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -10,6 +14,8 @@ import com.example.checkpoint2.databinding.ActivityMainBinding
 import com.example.checkpoint2.activities.avatarsList.AvatarListActivity
 import com.example.checkpoint2.activities.emojiList.EmojiListActivity
 import com.example.checkpoint2.activities.googleRepos.GoogleReposActivity
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.coroutineScope
 
 class MainActivity : AppCompatActivity() {
 /*    private lateinit var binding: ActivityMainBinding
@@ -41,6 +47,10 @@ class MainActivity : AppCompatActivity() {
                 updatedEmoji -> binding.imageView.load(updatedEmoji.emojiUrl.toUri().buildUpon().scheme("https").build())
         }
 
+        viewModel.usernameAvatar.observe(this) {
+                updatedEmoji -> binding.imageView.load(updatedEmoji.avatarUrl.toUri().buildUpon().scheme("https").build())
+        }
+
         viewModel.initializeMainData()
 
         //OnClick for roll button
@@ -54,6 +64,15 @@ class MainActivity : AppCompatActivity() {
         binding.buttonEmojiList.setOnClickListener {
             val intent = Intent (this, EmojiListActivity::class.java)
             startActivity(intent)
+        }
+
+        // Bind textView to textInputLayout2
+        val textView: TextInputLayout = binding.textInputLayout2
+
+        // Bind floatingActionButton.setOnClickListener to receive a function that listens to the textView
+        binding.floatingActionButton.setOnClickListener {
+            val string = textView.editText?.text.toString()
+            viewModel.getGitHubUsername(string)
         }
 
         // Set OnClick event to Avatar List button

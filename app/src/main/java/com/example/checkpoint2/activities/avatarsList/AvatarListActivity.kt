@@ -3,7 +3,6 @@ package com.example.checkpoint2.activities.avatarsList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.checkpoint2.adapter.AdapterAvatar
-import com.example.checkpoint2.data.DatasourceAvatar
 import com.example.checkpoint2.databinding.ActivityAvatarListBinding
 
 class AvatarListActivity : AppCompatActivity() {
@@ -15,10 +14,10 @@ class AvatarListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Initialize data.
-        val myDataset2 = DatasourceAvatar().loadAvatars()
+        //val myDataset2 = DatasourceAvatar().loadAvatars()
 
         val recyclerView2 = binding.recyclerView
-        recyclerView2.adapter = AdapterAvatar(this, myDataset2)
+        //recyclerView2.adapter = AdapterAvatar(this, myDataset2)
 
 
         // Use this setting to improve performance if you know that changes
