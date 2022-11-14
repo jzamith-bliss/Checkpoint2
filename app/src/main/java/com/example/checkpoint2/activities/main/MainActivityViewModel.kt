@@ -2,14 +2,12 @@ package com.example.checkpoint2.activities.main
 
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.checkpoint2.database.AvatarsRoomDatabase
 import com.example.checkpoint2.repository.EmojiManager
 import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.model.Emoji
-import com.example.checkpoint2.network.AvatarData
 import com.example.checkpoint2.network.EmojiApi
 import com.example.checkpoint2.network.asEmoji
 import com.example.checkpoint2.network.asEmojiData
@@ -31,8 +29,8 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
     private val emojiRepository = EmojiManager(EmojiRoomDatabase.getDatabase(application))
     val emojis:LiveData<List<Emoji>> = emojiRepository.emojis
 
-    //private val avatarRepository = AvatarManager(AvatarsRoomDatabase.getDatabase(application))
-    //val avatars:LiveData<List<AvatarData>> = avatarRepository.avatars
+    private val avatarRepository = AvatarManager(AvatarsRoomDatabase.getDatabase(application))
+    //val avatars:LiveData<List<Avatar>> = avatarRepository.avatars
 
     private var _currentRandomEmoji = MutableLiveData<Emoji>()
     val currentRandomEmoji: LiveData<Emoji>
@@ -71,12 +69,11 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
 
     fun getGitHubUsername(username: String) {
         viewModelScope.launch {
-            val avatar = AvatarsNetwork.getAvatarsNetwork(username)
-            _usernameAvatar.value = avatar
-            //avatarRepository.refreshAvatars(username)
-
+            _usernameAvatar.value = AvatarsNetwork.getAvatarsNetwork(username)
+            avatarRepository.refreshAvatars(username)
+            //Log.v("AV", "Avatars Viewmodel ${avatars.value}")
         }
-        //Log.v("AV", "Avatars Viewmodel ${avatars.value?.size}")
+
     }
     /**
      * Factory for constructing DevByteViewModel with parameter

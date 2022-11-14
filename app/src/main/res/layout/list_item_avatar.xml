@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="avatar"
+            type="com.example.checkpoint2.model.Avatar" />
+        <variable
+            name="avatarClick"
+            type="com.example.checkpoint2.adapter.AdapterAvatar.AvatarClickListener" />
+    </data>
 
     <ImageView
-        android:layout_width="50dp"
+        app:avatarUrl="@{avatar.avatarUrl}"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:id="@+id/item_image2"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:padding="2dp"
+        android:id="@+id/item_image"
         android:importantForAccessibility="no"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="20dp"/>
-</LinearLayout>
+        android:onClick="@{() ->  avatarClick.onAvatarClicked(avatar)}"/>
+</layout>

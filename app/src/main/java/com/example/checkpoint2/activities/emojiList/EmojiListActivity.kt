@@ -11,11 +11,6 @@ import com.example.checkpoint2.model.Emoji
 
 class EmojiListActivity : AppCompatActivity(),AdapterEmojis.EmojiClickListener {
     private val viewModel: EmojiListViewModel by viewModels()
-
-    /*    private val viewModel: EmojiListViewModel by lazy {
-        val activity = requireNotNull(this) {}
-        ViewModelProvider(this, EmojiListViewModel.Factory(this.application))[EmojiListViewModel::class.java]
-    }*/
     private lateinit var binding: ActivityEmojiListBinding
     private lateinit var adapter: AdapterEmojis
 
@@ -27,19 +22,10 @@ class EmojiListActivity : AppCompatActivity(),AdapterEmojis.EmojiClickListener {
         val recyclerView = binding.recyclerView
         binding.viewModel = viewModel
 
-        //viewModel.emojis.observe(this){}
-
-        //viewModel.currentEmojiList.observe(this) {
-                //adapter = AdapterEmojis(this, viewModel.currentEmojiList, this)
-        //}
         viewModel.initializeEmojiListData { adapter.notifyDataSetChanged() }
 
         adapter = AdapterEmojis(this, viewModel.emojiList, this)
         recyclerView.adapter = adapter
-        // Use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        //recyclerView.setHasFixedSize(true)
-
 
         //swipe refresh layout
         val refresh : SwipeRefreshLayout = binding.swipeRefresh
@@ -59,6 +45,4 @@ class EmojiListActivity : AppCompatActivity(),AdapterEmojis.EmojiClickListener {
     override fun onEmojiClicked(emoji: Emoji) {
         viewModel.onEmojiItemClick(emoji, { adapter.notifyDataSetChanged() })
     }
-
-
 }

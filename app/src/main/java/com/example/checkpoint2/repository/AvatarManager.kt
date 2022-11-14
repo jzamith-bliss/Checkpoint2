@@ -1,21 +1,16 @@
 package com.example.checkpoint2.repository
 
-
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import com.example.checkpoint2.database.AvatarsRoomDatabase
-import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Avatar
-import com.example.checkpoint2.model.Emoji
 import com.example.checkpoint2.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AvatarManager(private val database: AvatarsRoomDatabase) {
 
-    val avatars: LiveData<List<AvatarData>> =
-        Transformations.map(database.avatarDao.getAvatars()) { it }
-
+   /* val avatars: LiveData<List<Avatar>> =
+        Transformations.map(database.avatarDao.getAvatars()) { it.asAvatar() }
+*/
     suspend fun refreshAvatars(username: String) {
         withContext(Dispatchers.IO) {
             val avatarList = AvatarApi.retrofitService.getAvatar(username)
@@ -23,9 +18,32 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
         }
     }
 
-    suspend fun getAvatars() {
+    suspend fun clearAvatars() {
         withContext(Dispatchers.IO) {
-            database.avatarDao.getAvatars()
+            database.avatarDao.clearAvatars()
+        }
+    }
+/*
+    suspend fun getAvatarsFromDisk(): List<Avatar> {
+        return database.avatarDao.getAvatars().map { it.asAvatar() }
+    }*/
+
+
+    suspend fun getAvatars(): List<Avatar> {
+        return withContext(Dispatchers.IO) {
+            database.avatarDao.getAvatars().map { it.asAvatar() }
+        }
+    }
+
+    private suspend fun getAvatarDataFromDisk(username: String):AvatarData {
+        return withContext(Dispatchers.IO) {
+            database.avatarDao.getSearchAvatar(username)
+        }
+    }
+
+    suspend fun deleteAvatars(username: String) {
+        return withContext(Dispatchers.IO) {
+            database.avatarDao.delete(getAvatarDataFromDisk(username))
         }
     }
 }

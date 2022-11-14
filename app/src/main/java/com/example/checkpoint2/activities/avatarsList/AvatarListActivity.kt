@@ -1,27 +1,48 @@
 package com.example.checkpoint2.activities.avatarsList
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.checkpoint2.adapter.AdapterAvatar
 import com.example.checkpoint2.databinding.ActivityAvatarListBinding
+import com.example.checkpoint2.model.Avatar
 
-class AvatarListActivity : AppCompatActivity() {
+class AvatarListActivity : AppCompatActivity(), AdapterAvatar.AvatarClickListener {
+    private val viewModel: AvatarListViewModel by viewModels()
     private lateinit var binding: ActivityAvatarListBinding
+    private  lateinit var adapter: AdapterAvatar
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAvatarListBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Initialize data.
-        //val myDataset2 = DatasourceAvatar().loadAvatars()
-
         val recyclerView2 = binding.recyclerView
-        //recyclerView2.adapter = AdapterAvatar(this, myDataset2)
+        binding.viewModel = viewModel
 
+        viewModel.initializeAvatarListData { adapter.notifyDataSetChanged() }
 
-        // Use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        recyclerView2.setHasFixedSize(true)
+        adapter = AdapterAvatar(this, viewModel.avatarList, this)
+        recyclerView2.adapter = adapter
+
+        //swipe refresh layout
+        val refresh : SwipeRefreshLayout = binding.swipeRefresh
+        //add listener for refresh
+        refresh.setOnRefreshListener {
+            //refresh data with original dataset
+            viewModel.clearAvatars()
+            //notify the adapter about the data set changes
+            adapter.notifyDataSetChanged()
+
+            refresh.isRefreshing = false
+
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    override fun onAvatarClicked(avatar: Avatar) {
+        viewModel.onAvatarItemClick(avatar, { adapter.notifyDataSetChanged() })
     }
 }
