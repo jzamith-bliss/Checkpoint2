@@ -2,6 +2,7 @@ package com.example.checkpoint2.network
 
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,12 +12,26 @@ import com.example.checkpoint2.activities.main.EmojiApiStatus
 import com.example.checkpoint2.adapter.AdapterAvatar
 
 import com.example.checkpoint2.adapter.AdapterEmojis
+import com.example.checkpoint2.adapter.AdapterRepos
 import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.model.Emoji
+import com.example.checkpoint2.model.Repos
 
 @BindingAdapter("listData")
 fun bindRecyclerView(recyclerView: RecyclerView, data: List<Emoji>?) {
     val adapter = recyclerView.adapter as AdapterEmojis
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listReposData")
+fun bindRecyclerViewRepos(recyclerView: RecyclerView, data: List<Repos>?) {
+    val adapter = recyclerView.adapter as AdapterRepos
+    adapter.submitList(data)
+}
+
+@BindingAdapter("listAvatarData")
+fun bindRecyclerViewAvatar(recyclerView: RecyclerView, data: List<Avatar>?) {
+    val adapter = recyclerView.adapter as AdapterAvatar
     adapter.submitList(data)
 }
 
@@ -31,12 +46,6 @@ fun bindImage(imgView: ImageView, imgUrl: String?) {
     }
 }
 
-@BindingAdapter("listAvatarData")
-fun bindRecyclerViewAvatar(recyclerView: RecyclerView, data: List<Avatar>?) {
-    val adapter = recyclerView.adapter as AdapterAvatar
-    adapter.submitList(data)
-}
-
 @BindingAdapter("avatarUrl")
 fun bindAvatar(avatar: ImageView, avatarUrl: String?) {
     avatarUrl?.let {
@@ -46,6 +55,11 @@ fun bindAvatar(avatar: ImageView, avatarUrl: String?) {
             error(R.drawable.ic_broken_image)
         }
     }
+}
+
+@BindingAdapter("reposName")
+fun bindRepos(textView: TextView, repoName: String?) {
+    textView.text = repoName
 }
 
 @BindingAdapter("emojiApiStatus")

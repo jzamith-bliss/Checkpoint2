@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 
 class AvatarManager(private val database: AvatarsRoomDatabase) {
 
-   /* val avatars: LiveData<List<Avatar>> =
+    /* val avatars: LiveData<List<Avatar>> =
         Transformations.map(database.avatarDao.getAvatars()) { it.asAvatar() }
 */
     suspend fun refreshAvatars(username: String) {
@@ -28,6 +28,30 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
         return database.avatarDao.getAvatars().map { it.asAvatar() }
     }*/
 
+    suspend fun getAvatar(username: String): Avatar {
+        return if (checkAvatarInDisk(username)) {getAvatarFromDisk(username)}
+        else { getAvatarFromNetwork(username).also { insertAvatarInDiscFromNetwork(username)}}
+    }
+
+    suspend fun checkAvatarInDisk(username: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            database.avatarDao.exists(username)
+        }
+    }
+
+    suspend fun getAvatarFromDisk(username: String): Avatar {
+        return getAvatarDataFromDisk(username).asAvatar()
+    }
+
+    suspend fun getAvatarFromNetwork(username: String): Avatar {
+        return getAvatarDataFromNetwork(username).asAvatar()
+    }
+
+    suspend fun insertAvatarInDiscFromNetwork(username: String) {
+        withContext(Dispatchers.IO) {
+            database.avatarDao.insert(getAvatarDataFromNetwork(username))
+        }
+    }
 
     suspend fun getAvatars(): List<Avatar> {
         return withContext(Dispatchers.IO) {
@@ -35,7 +59,7 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
         }
     }
 
-    private suspend fun getAvatarDataFromDisk(username: String):AvatarData {
+    suspend fun getAvatarDataFromDisk(username: String): AvatarData {
         return withContext(Dispatchers.IO) {
             database.avatarDao.getSearchAvatar(username)
         }
@@ -46,10 +70,15 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
             database.avatarDao.delete(getAvatarDataFromDisk(username))
         }
     }
+
+    suspend fun getAvatarDataFromNetwork(username: String): AvatarData {
+        return AvatarApi.retrofitService.getAvatar(username).asAvatarData()
+    }
+
 }
 
 object AvatarsNetwork {
-    suspend fun getAvatarsNetwork(string: String): Avatar {
-        return AvatarApi.retrofitService.getAvatar(string).asAvatarData().asAvatar()//.toMutableList()
+    suspend fun getAvatarsNetwork(username: String): Avatar {
+        return AvatarApi.retrofitService.getAvatar(username).asAvatarData().asAvatar()//.toMutableList()
     }
 }

@@ -26,7 +26,6 @@ class AvatarListViewModel(application: Application): AndroidViewModel(applicatio
                     //setEmojiList()
                     //getAvatars()
                     _avatarList.addAll(avatarRepository.getAvatars())
-                    Toast.makeText( getApplication() ,"Avatar List is Empty", Toast.LENGTH_SHORT).show()
                     onCompletion()
                     //getEmojiListFromNetwork()
                 }

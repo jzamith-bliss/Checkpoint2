@@ -1,9 +1,7 @@
 package com.example.checkpoint2.network
 
-import com.example.checkpoint2.network.AvatarData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
@@ -28,17 +26,17 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 /**
- * A public interface that exposes the [getAvatar] method
+ * A public interface that exposes the [getRepos] method
  */
 
-interface AvatarApiService {
+interface ReposApiService {
     /**
-     * Returns Map<String, String> of [Avatar] and this method can be called from a Coroutine.
+     * Returns Map<String, String> of [Repos] and this method can be called from a Coroutine.
      * The @GET annotation indicates that the "photos" endpoint will be requested with the GET
      * HTTP method
      */
-    @GET("users/{username}")
-    suspend fun getAvatar(@Path(value = "username") username: String?): Map<String, Any?>
+    @GET("users/{username}/repos")
+    suspend fun getRepos(@Path("username") username: String): List<Map<String, Any?>>
     //suspend fun getAvatar(@Url username: String): Map<String, String>
     //suspend fun getAvatar() : Map<String, String>
 }
@@ -46,18 +44,13 @@ interface AvatarApiService {
 /**
  * A public Api object that exposes the lazy-initialized Retrofit service
  */
-object AvatarApi {
-    val retrofitService: AvatarApiService by lazy { retrofit.create(AvatarApiService::class.java) }
+object ReposApi {
+    val retrofitService: ReposApiService by lazy { retrofit.create(ReposApiService::class.java) }
 }
 
-fun Map<String, Any?>.asAvatarData(): AvatarData {
-    var user = ""
-    var url = ""
-
-    forEach{
-        if (it.key == "login") { user = it.value as String}
-        else if (it.key == "avatar_url") {url = it.value as String}
+fun List<Map<String, Any?>>.asReposData(): List<RepoData> {
+    //return map { RepoData( name = it.key, repoName = it.value) }
+    return map {
+        RepoData( repoName = (it["full_name"] as String))
     }
-
-    return AvatarData(avatarUrl = url, avatarUser = user)
 }

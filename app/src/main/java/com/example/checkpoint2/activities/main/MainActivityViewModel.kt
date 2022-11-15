@@ -6,13 +6,14 @@ import androidx.lifecycle.*
 import com.example.checkpoint2.database.AvatarsRoomDatabase
 import com.example.checkpoint2.repository.EmojiManager
 import com.example.checkpoint2.database.EmojiRoomDatabase
+import com.example.checkpoint2.database.ReposRoomDatabase
 import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.model.Emoji
 import com.example.checkpoint2.network.EmojiApi
 import com.example.checkpoint2.network.asEmoji
 import com.example.checkpoint2.network.asEmojiData
 import com.example.checkpoint2.repository.AvatarManager
-import com.example.checkpoint2.repository.AvatarsNetwork
+import com.example.checkpoint2.repository.ReposManager
 import kotlinx.coroutines.launch
 
 
@@ -32,6 +33,8 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
     private val avatarRepository = AvatarManager(AvatarsRoomDatabase.getDatabase(application))
     //val avatars:LiveData<List<Avatar>> = avatarRepository.avatars
 
+    private val reposRepository = ReposManager(ReposRoomDatabase.getDatabase(application))
+
     private var _currentRandomEmoji = MutableLiveData<Emoji>()
     val currentRandomEmoji: LiveData<Emoji>
         get() = _currentRandomEmoji
@@ -45,6 +48,7 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
             _status.value = EmojiApiStatus.LOADING
             try {
                 emojiRepository.refreshEmojis()
+                //reposRepository.getReposApi("google")
                 if (currentRandomEmoji.value == null) {
                     setNewRandomEmoji()
                 }
@@ -69,9 +73,9 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
 
     fun getGitHubUsername(username: String) {
         viewModelScope.launch {
-            _usernameAvatar.value = AvatarsNetwork.getAvatarsNetwork(username)
-            avatarRepository.refreshAvatars(username)
-            //Log.v("AV", "Avatars Viewmodel ${avatars.value}")
+
+            _usernameAvatar.value = avatarRepository.getAvatar(username)
+            //reposRepository.getReposApi(username)
         }
 
     }

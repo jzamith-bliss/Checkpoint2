@@ -3,6 +3,7 @@ package com.example.checkpoint2.network
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.checkpoint2.model.Avatar
+import com.example.checkpoint2.network.AvatarData
 
 @Dao
 interface AvatarDao {
@@ -24,4 +25,7 @@ interface AvatarDao {
 
     @Query("SELECT * FROM avatar WHERE avatar_name = :username")
     fun getSearchAvatar(username: String): AvatarData
+
+    @Query("SELECT EXISTS (SELECT * FROM avatar WHERE avatar_name = :username)")
+    fun exists(username: String): Boolean
 }
