@@ -72,7 +72,7 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
 
     fun getGitHubUsername(username: String) {
         viewModelScope.launch {
-            _usernameAvatar.value = avatarRepository.getAvatar(username.trim())
+            _usernameAvatar.value = avatarRepository.getAvatar(username)
             //reposRepository.getReposApi(username)
         }
     }

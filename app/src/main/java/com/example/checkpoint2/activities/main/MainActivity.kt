@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         // Bind floatingActionButton.setOnClickListener to receive a function that listens to the textView
         binding.floatingActionButton.setOnClickListener {
             val string = textView.editText?.text.toString()
-            viewModel.getGitHubUsername(string)
+            viewModel.getGitHubUsername(string.trim())
         }
 
         // Set OnClick event to Avatar List button
