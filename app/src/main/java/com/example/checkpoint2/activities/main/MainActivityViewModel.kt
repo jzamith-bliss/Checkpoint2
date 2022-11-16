@@ -1,6 +1,5 @@
 package com.example.checkpoint2.activities.main
 
-
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.checkpoint2.database.AvatarsRoomDatabase
@@ -73,12 +72,11 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
 
     fun getGitHubUsername(username: String) {
         viewModelScope.launch {
-
-            _usernameAvatar.value = avatarRepository.getAvatar(username)
+            _usernameAvatar.value = avatarRepository.getAvatar(username.trim())
             //reposRepository.getReposApi(username)
         }
-
     }
+
     /**
      * Factory for constructing DevByteViewModel with parameter
      */
