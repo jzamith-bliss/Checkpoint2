@@ -6,6 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 private const val BASE_URL =
     "https://api.github.com/"
@@ -36,9 +37,11 @@ interface ReposApiService {
      * HTTP method
      */
     @GET("users/{username}/repos")
-    suspend fun getRepos(@Path("username") username: String): List<Map<String, Any?>>
-    //suspend fun getAvatar(@Url username: String): Map<String, String>
-    //suspend fun getAvatar() : Map<String, String>
+    suspend fun getRepos(
+        @Path("username") username: String = "google",
+        @Query("page") page: Int,
+        @Query("limit") size: Int)
+    : List<Map<String, Any?>>
 }
 
 /**

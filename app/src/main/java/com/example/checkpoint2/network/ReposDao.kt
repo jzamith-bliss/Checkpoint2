@@ -16,6 +16,12 @@ interface ReposDao {
     @Delete
     suspend fun delete(repos: RepoData)
 
+    @Query("SELECT COUNT(*) FROM repos")
+    fun getReposNum(): Int
+
+    @Query("SELECT * FROM repos LIMIT :limit")
+    fun getNextRepos(limit: Int): List<RepoData>
+
     @Query("SELECT * FROM repos")
     fun getRepos(): List<RepoData>
 

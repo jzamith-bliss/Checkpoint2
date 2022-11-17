@@ -18,15 +18,6 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.coroutineScope
 
 class MainActivity : AppCompatActivity() {
-/*    private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainActivityViewModel by lazy {
-        val activity = requireNotNull(this) {
-            "You can only access the viewModel after onActivityCreated()"
-        }
-        ViewModelProvider(this, MainActivityViewModel.Factory(activity.application))
-            .get(MainActivityViewModel::class.java)
-    }*/
-
 
     private val viewModel: MainActivityViewModel by lazy {
         val activity = requireNotNull(this) {}
@@ -55,10 +46,6 @@ class MainActivity : AppCompatActivity() {
 
         //OnClick for roll button
         binding.buttonRandomEmoji.setOnClickListener { onRandomEmoji() }
-
-        // Set initial image as like image
-        //val emojiImage: ImageView = findViewById(R.id.imageView)
-        //emojiImage.setImageResource(R.drawable.like)
 
         // Set OnClick event to Emoji List button
         binding.buttonEmojiList.setOnClickListener {
@@ -93,6 +80,4 @@ class MainActivity : AppCompatActivity() {
     private fun onRandomEmoji() {
         viewModel.setNewRandomEmoji()
     }
-
-
 }
