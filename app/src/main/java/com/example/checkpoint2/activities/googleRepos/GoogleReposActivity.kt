@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.checkpoint2.adapter.AdapterRepos
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.checkpoint2.databinding.ActivityGoogleReposBinding
 
 class GoogleReposActivity : AppCompatActivity() {
@@ -24,11 +26,14 @@ class GoogleReposActivity : AppCompatActivity() {
         setContentView(binding.root)
         val recyclerView = binding.recyclerView
         binding.viewModel = viewModel
+        binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
+        val reposLayoutManager = binding.recyclerView.layoutManager as LinearLayoutManager
+
 
         viewModel.initializeRepositoryData()
 
         adapter = AdapterRepos(this, viewModel.repos.value!!)
-        recyclerView.adapter = adapter
+        //recyclerView.adapter = adapter
         //val repositoryAdapter = binding.recyclerView.adapter as AdapterRepos
 
         viewModel.repos.observe(this) {
@@ -42,12 +47,27 @@ class GoogleReposActivity : AppCompatActivity() {
             viewModel.finishUpdate()
         }
 
-        binding.recyclerView.layoutManager?.let {
-            binding.recyclerView.addOnScrollListener(object: EndlessRecyclerOnScrollListener(it as LinearLayoutManager){
-                override fun onLoadMore(lastVisibleIndex: Int) {
-                    if (!(viewModel.isUpdating())) { viewModel.getNextRepositories() }
+        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+
+            fun updateScroll()  {
+                if (!(viewModel.isUpdating())) {
+                viewModel.getNextRepositories()
+            }}
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val totalItemCount: Int = reposLayoutManager.itemCount
+                val lastVisibleItemIndex: Int = reposLayoutManager.findLastVisibleItemPosition()
+                val lastCompletelyVisibleItemPosition: Int = reposLayoutManager.findLastCompletelyVisibleItemPosition()
+                if (lastVisibleItemIndex == totalItemCount -1) {
+                    updateScroll()
+                    //reposLayoutManager.smoothScrollToPosition(recyclerView, null, lastCompletelyVisibleItemPosition)
                 }
-            })
-        }
+                //reposLayoutManager.smoothScrollToPosition(recyclerView, null, lastVisibleItemIndex)
+                //reposLayoutManager.scrollToPosition(lastVisibleItemIndex)
+
+            }
+        })
+
     }
 }

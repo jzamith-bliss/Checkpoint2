@@ -43,9 +43,9 @@ class AdapterRepos(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AdapterRepos.ItemViewHolder {
+    ): ItemViewHolder {
         // create a new view
-        return AdapterRepos.ItemViewHolder(
+        return ItemViewHolder(
             ListItemGoogleBinding.inflate(LayoutInflater.from(parent.context))
         )
     }
@@ -63,4 +63,5 @@ class AdapterRepos(
      * Return the size of your dataset (invoked by the layout manager)
      */
     override fun getItemCount() = dataset.size
+
 }
