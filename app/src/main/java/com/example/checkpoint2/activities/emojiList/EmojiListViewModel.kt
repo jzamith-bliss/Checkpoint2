@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 
 import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Emoji
-import com.example.checkpoint2.repository.EmojisNetwork
 import com.example.checkpoint2.repository.EmojiManager
 import kotlinx.coroutines.launch
 
@@ -26,14 +25,9 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
     fun initializeEmojiListData(onCompletion: () -> Unit ) {
         viewModelScope.launch {
             try {
-                //emojiRepository.refreshEmojis()
-                if (emojiList.isEmpty()) {
-                    //setEmojiList()
-                    _emojiList.addAll(EmojisNetwork.getEmojisNetwork())
-                    _persistentEmojiList.addAll(EmojisNetwork.getEmojisNetwork())
-                    onCompletion()
-                    //getEmojiListFromNetwork()
-                }
+                _emojiList.addAll(emojiRepository.getEmojis())
+                _persistentEmojiList.addAll(emojiRepository.getEmojis())
+                onCompletion()
             }
             catch (e: Exception) {
                 e.printStackTrace()

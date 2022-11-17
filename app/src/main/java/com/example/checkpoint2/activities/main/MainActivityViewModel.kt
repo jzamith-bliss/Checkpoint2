@@ -1,18 +1,15 @@
 package com.example.checkpoint2.activities.main
 
 import android.app.Application
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
 import androidx.lifecycle.*
 import com.example.checkpoint2.database.AvatarsRoomDatabase
 import com.example.checkpoint2.repository.EmojiManager
 import com.example.checkpoint2.database.EmojiRoomDatabase
-import com.example.checkpoint2.database.ReposRoomDatabase
 import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.model.Emoji
-import com.example.checkpoint2.network.EmojiApi
-import com.example.checkpoint2.network.asEmoji
-import com.example.checkpoint2.network.asEmojiData
 import com.example.checkpoint2.repository.AvatarManager
-import com.example.checkpoint2.repository.ReposManager
 import kotlinx.coroutines.launch
 
 
@@ -30,9 +27,6 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
     val emojis:LiveData<List<Emoji>> = emojiRepository.emojis
 
     private val avatarRepository = AvatarManager(AvatarsRoomDatabase.getDatabase(application))
-    //val avatars:LiveData<List<Avatar>> = avatarRepository.avatars
-
-    private val reposRepository = ReposManager(ReposRoomDatabase.getDatabase(application))
 
     private var _currentRandomEmoji = MutableLiveData<Emoji>()
     val currentRandomEmoji: LiveData<Emoji>
@@ -46,24 +40,16 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
         viewModelScope.launch {
             _status.value = EmojiApiStatus.LOADING
             try {
-                emojiRepository.refreshEmojis()
-                //reposRepository.getReposApi("google")
                 if (currentRandomEmoji.value == null) {
-                    setNewRandomEmoji()
+                    _currentRandomEmoji.value = emojiRepository.getEmojis().random()
                 }
                 _status.value = EmojiApiStatus.DONE
             }
             catch (e: Exception) {
                 e.printStackTrace()
-                //_status.value = EmojiApiStatus.ERROR
-                getFirstEmojiFromNetwork()
 
             }
         }
-    }
-
-    private suspend fun getFirstEmojiFromNetwork() {
-        _currentRandomEmoji.value = EmojiApi.retrofitService.getEmojis().asEmojiData().asEmoji().random()
     }
 
     fun setNewRandomEmoji() {

@@ -40,7 +40,7 @@ class GoogleReposViewModel(application: Application): AndroidViewModel(applicati
         startUpdate()
         viewModelScope.launch {
             currentPage++
-            nextRepositoryPosition = (currentPage + currentSize)
+            nextRepositoryPosition = (currentPage * currentSize)
             _repos.value = reposRepository.getRepos(currentPage, currentSize)
         }
     }

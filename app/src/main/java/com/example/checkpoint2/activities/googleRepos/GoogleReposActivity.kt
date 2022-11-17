@@ -3,9 +3,9 @@ package com.example.checkpoint2.activities.googleRepos
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.example.checkpoint2.adapter.AdapterRepos
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.checkpoint2.databinding.ActivityGoogleReposBinding
@@ -33,40 +33,42 @@ class GoogleReposActivity : AppCompatActivity() {
         viewModel.initializeRepositoryData()
 
         adapter = AdapterRepos(this, viewModel.repos.value!!)
-        //recyclerView.adapter = adapter
+        recyclerView.adapter = adapter
+        val progressBar = binding.progressBar
         //val repositoryAdapter = binding.recyclerView.adapter as AdapterRepos
 
         viewModel.repos.observe(this) {
-            updatedRepos -> binding.recyclerView.adapter = AdapterRepos(this, dataset = updatedRepos)
+            updatedRepos -> adapter.dataset = updatedRepos
             if (updatedRepos.isNotEmpty()) {
+                progressBar.visibility = View.VISIBLE
                 adapter.notifyItemRangeInserted(
                     viewModel.getNextRepositoryPosition(),
                     viewModel.getRepositoriesUpdateSize()
                 )
+
             }
             viewModel.finishUpdate()
+            progressBar.visibility = View.INVISIBLE
         }
 
-        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
-
+        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
             fun updateScroll()  {
                 if (!(viewModel.isUpdating())) {
                 viewModel.getNextRepositories()
-            }}
+                }
+            }
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val totalItemCount: Int = reposLayoutManager.itemCount
                 val lastVisibleItemIndex: Int = reposLayoutManager.findLastVisibleItemPosition()
-                val lastCompletelyVisibleItemPosition: Int = reposLayoutManager.findLastCompletelyVisibleItemPosition()
                 if (lastVisibleItemIndex == totalItemCount -1) {
                     updateScroll()
-                    //reposLayoutManager.smoothScrollToPosition(recyclerView, null, lastCompletelyVisibleItemPosition)
+
                 }
-                //reposLayoutManager.smoothScrollToPosition(recyclerView, null, lastVisibleItemIndex)
-                //reposLayoutManager.scrollToPosition(lastVisibleItemIndex)
 
             }
+
         })
 
     }

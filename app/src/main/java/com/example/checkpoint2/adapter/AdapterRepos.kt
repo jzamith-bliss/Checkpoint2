@@ -11,7 +11,7 @@ import com.example.checkpoint2.model.Repos
 
 class AdapterRepos(
     private val context: Context,
-    private val dataset: List<Repos>
+    var dataset: List<Repos>
 ) : ListAdapter<Repos, AdapterRepos.ItemViewHolder>(DiffCallback) {
 
     // Provide a reference to the views for each data item

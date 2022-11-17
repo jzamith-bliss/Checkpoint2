@@ -2,6 +2,7 @@ package com.example.checkpoint2.network
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.checkpoint2.model.Emoji
 import com.example.checkpoint2.network.EmojiData
 import kotlinx.coroutines.flow.Flow
 
@@ -17,10 +18,16 @@ interface EmojiDao {
     @Query("SELECT * FROM emoji")
     fun getEmojis(): LiveData<List<EmojiData>>
 
+    @Query("SELECT * FROM emoji")
+    fun getEmojisFromDatabase(): List<EmojiData>
+
     @Query("SELECT * FROM emoji WHERE id = :id")
     fun getRandomEmoji(id: Int): LiveData<EmojiData>
 
     @Query("DELETE FROM emoji")
     fun clearEmojis()
+
+    @Query("SELECT EXISTS (SELECT * FROM emoji)")
+    fun exists(): Boolean
 
 }

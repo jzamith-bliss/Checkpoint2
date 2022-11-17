@@ -1,12 +1,10 @@
 package com.example.checkpoint2.activities.main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.KeyEvent
-import android.view.View
-import android.widget.TextView
+
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -15,7 +13,6 @@ import com.example.checkpoint2.activities.avatarsList.AvatarListActivity
 import com.example.checkpoint2.activities.emojiList.EmojiListActivity
 import com.example.checkpoint2.activities.googleRepos.GoogleReposActivity
 import com.google.android.material.textfield.TextInputLayout
-import kotlinx.coroutines.coroutineScope
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,22 +24,39 @@ class MainActivity : AppCompatActivity() {
     //private val viewModel: MainActivityViewModel by viewModels()
     lateinit var binding: ActivityMainBinding
 
+    @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.emojis.observe(this){}
 
+        //val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
+        //val editor = sharedPreferences.edit()
+
         viewModel.currentRandomEmoji.observe(this) {
-            //binding.imageView.setImageResource(it)
-                updatedEmoji -> binding.imageView.load(updatedEmoji.emojiUrl.toUri().buildUpon().scheme("https").build())
+            updatedEmoji -> binding.imageView.load(updatedEmoji.emojiUrl.toUri().buildUpon().scheme("https").build())
+            //viewModel.resetAvatar()
+            //editor.putString("currentEmoji",updatedEmoji.emojiUrl).apply()
+
+
         }
 
         viewModel.usernameAvatar.observe(this) {
-                updatedEmoji -> binding.imageView.load(updatedEmoji.avatarUrl.toUri().buildUpon().scheme("https").build())
+                updatedAvatar -> binding.imageView.load(updatedAvatar.avatarUrl.toUri().buildUpon().scheme("https").build())
+            //viewModel.resetEmoji()
+            //editor.putString("currentAvatar",updatedAvatar.avatarUrl).apply()
         }
 
+
         viewModel.initializeMainData()
+
+/*        fun latestImageView() {
+           val emoji = sharedPreferences.getString("currentEmoji","defaultStringIfNothingFound")
+            Log.v("LOG", "emoji $emoji")
+            val avatar = sharedPreferences.getString("currentAvatar","defaultStringIfNothingFound")
+            Log.v("LOG", "avatar $avatar")
+        }*/
 
         //OnClick for roll button
         binding.buttonRandomEmoji.setOnClickListener { onRandomEmoji() }
