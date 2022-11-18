@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         // Bind floatingActionButton.setOnClickListener to receive a function that listens to the textView
         binding.floatingActionButton.setOnClickListener {
             val string = textView.editText?.text.toString()
-            viewModel.getGitHubUsername(string.trim())
+            viewModel.getGitHubUsername(string.trim(), this)
         }
 
         // Set OnClick event to Avatar List button

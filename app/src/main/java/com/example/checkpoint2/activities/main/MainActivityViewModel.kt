@@ -1,8 +1,10 @@
 package com.example.checkpoint2.activities.main
 
 import android.app.Application
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.checkpoint2.database.AvatarsRoomDatabase
 import com.example.checkpoint2.repository.EmojiManager
@@ -56,10 +58,14 @@ class MainActivityViewModel(application: Application): AndroidViewModel(applicat
         _currentRandomEmoji.value = emojis.value!![(emojis.value!!.indices).random()]
     }
 
-    fun getGitHubUsername(username: String) {
+    fun getGitHubUsername(username: String, context: Context) {
         viewModelScope.launch {
-            _usernameAvatar.value = avatarRepository.getAvatar(username)
-            //reposRepository.getReposApi(username)
+            try {
+                _usernameAvatar.value = avatarRepository.getAvatar(username)
+            } catch (e: Exception) {
+                Toast.makeText(context, "User not found!", Toast.LENGTH_LONG).show()
+            }
+
         }
     }
 
