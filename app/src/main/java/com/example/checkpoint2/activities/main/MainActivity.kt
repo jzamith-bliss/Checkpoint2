@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-
+import android.util.Log
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -38,14 +38,22 @@ class MainActivity : AppCompatActivity() {
             updatedEmoji -> binding.imageView.load(updatedEmoji.emojiUrl.toUri().buildUpon().scheme("https").build())
             //viewModel.resetAvatar()
             //editor.putString("currentEmoji",updatedEmoji.emojiUrl).apply()
-
-
+            //editor.remove("currentAvatar").apply()
+/*            val emoji = sharedPreferences.getString("currentEmoji","defaultStringIfNothingFound")
+            Log.v("LOG", "currentEmoji.observe -> emoji $emoji")
+            val avatar = sharedPreferences.getString("currentAvatar","defaultStringIfNothingFound")
+            Log.v("LOG", "currentEmoji.observe -> avatar $avatar")*/
         }
 
         viewModel.usernameAvatar.observe(this) {
                 updatedAvatar -> binding.imageView.load(updatedAvatar.avatarUrl.toUri().buildUpon().scheme("https").build())
             //viewModel.resetEmoji()
             //editor.putString("currentAvatar",updatedAvatar.avatarUrl).apply()
+            //editor.remove("currentEmoji").apply()
+/*            val emoji = sharedPreferences.getString("currentEmoji","defaultStringIfNothingFound")
+            Log.v("LOG", "usernameAvatar.observe -> emoji $emoji")
+            val avatar = sharedPreferences.getString("currentAvatar","defaultStringIfNothingFound")
+            Log.v("LOG", "usernameAvatar.observe -> avatar $avatar")*/
         }
 
 

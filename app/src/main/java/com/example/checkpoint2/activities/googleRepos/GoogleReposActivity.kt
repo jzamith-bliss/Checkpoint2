@@ -40,22 +40,24 @@ class GoogleReposActivity : AppCompatActivity() {
         viewModel.repos.observe(this) {
             updatedRepos -> adapter.dataset = updatedRepos
             if (updatedRepos.isNotEmpty()) {
-                progressBar.visibility = View.VISIBLE
                 adapter.notifyItemRangeInserted(
                     viewModel.getNextRepositoryPosition(),
                     viewModel.getRepositoriesUpdateSize()
                 )
 
             }
-            viewModel.finishUpdate()
             progressBar.visibility = View.INVISIBLE
+            viewModel.finishUpdate()
+
         }
 
         binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener() {
             fun updateScroll()  {
                 if (!(viewModel.isUpdating())) {
-                viewModel.getNextRepositories()
+                    progressBar.visibility = View.VISIBLE
+                    viewModel.getNextRepositories()
                 }
+
             }
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -70,6 +72,5 @@ class GoogleReposActivity : AppCompatActivity() {
             }
 
         })
-
     }
 }

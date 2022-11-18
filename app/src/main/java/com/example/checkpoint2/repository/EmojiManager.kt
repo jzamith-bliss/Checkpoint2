@@ -46,6 +46,11 @@ class EmojiManager(private val database: EmojiRoomDatabase) {
         }
     }
 
+    suspend fun clearAll() {
+        return withContext(Dispatchers.IO) {
+            database.emojiDao.clearEmojis()
+        }
+    }
 
 }
 

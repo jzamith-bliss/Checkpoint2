@@ -25,9 +25,12 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
     fun initializeEmojiListData(onCompletion: () -> Unit ) {
         viewModelScope.launch {
             try {
-                _emojiList.addAll(emojiRepository.getEmojis())
-                _persistentEmojiList.addAll(emojiRepository.getEmojis())
-                onCompletion()
+                //emojiRepository.clearAll()
+                if (emojiList.isEmpty()) {
+                    _emojiList.addAll(emojiRepository.getEmojis())
+                    _persistentEmojiList.addAll(emojiRepository.getEmojis())
+                    onCompletion()
+                }
             }
             catch (e: Exception) {
                 e.printStackTrace()
@@ -37,7 +40,6 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
     }
 
     fun onEmojiItemClick(emoji: Emoji, onCompletion: () -> Unit) {
-        //Toast.makeText(this, "Item ${emoji.emojiUrl} clicked", Toast.LENGTH_SHORT).show()
         _emojiList.remove(emoji)
         onCompletion()
     }
