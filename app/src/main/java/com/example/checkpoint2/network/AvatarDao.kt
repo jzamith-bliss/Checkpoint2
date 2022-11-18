@@ -28,4 +28,7 @@ interface AvatarDao {
 
     @Query("SELECT EXISTS (SELECT * FROM avatar WHERE avatar_name = :username)")
     fun exists(username: String): Boolean
+
+    @Query("SELECT * FROM avatar WHERE avatar_url = :url LIMIT 1")
+    fun getAvatarByUrl(url: String): AvatarData
 }

@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import coil.load
@@ -32,25 +30,27 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel.emojis.observe(this){}
 
-        //val sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE)
-        //val editor = sharedPreferences.edit()
+        val sharedPreferences = getSharedPreferences("mainImage", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
 
         viewModel.currentRandomEmoji.observe(this) {
             updatedEmoji -> binding.imageView.load(updatedEmoji.emojiUrl.toUri().buildUpon().scheme("https").build())
-            //viewModel.resetAvatar()
-            //editor.putString("currentEmoji",updatedEmoji.emojiUrl).apply()
-
-
+            editor.remove("currentAvatar").apply()
+            editor.putString("currentEmoji",updatedEmoji.emojiUrl).apply()
         }
 
         viewModel.usernameAvatar.observe(this) {
                 updatedAvatar -> binding.imageView.load(updatedAvatar.avatarUrl.toUri().buildUpon().scheme("https").build())
-            //viewModel.resetEmoji()
-            //editor.putString("currentAvatar",updatedAvatar.avatarUrl).apply()
+            editor.remove("currentEmoji").apply()
+            editor.putString("currentAvatar",updatedAvatar.avatarUrl).apply()
         }
 
+        val emoji = sharedPreferences.getString("currentEmoji",null)
+        val avatar = sharedPreferences.getString("currentAvatar",null)
 
-        viewModel.initializeMainData()
+        viewModel.initializeMainData(emoji, avatar)
+
+
 
 /*        fun latestImageView() {
            val emoji = sharedPreferences.getString("currentEmoji","defaultStringIfNothingFound")

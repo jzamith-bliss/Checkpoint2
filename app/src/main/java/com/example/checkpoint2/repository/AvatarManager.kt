@@ -62,5 +62,11 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
         }
     }
 
+    suspend fun getAvatarByUrlFromDatabase(url: String): Avatar {
+        return withContext(Dispatchers.IO) {
+            database.avatarDao.getAvatarByUrl(url).asAvatar()
+        }
+    }
+
 }
 

@@ -3,8 +3,6 @@ package com.example.checkpoint2.network
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.checkpoint2.model.Emoji
-import com.example.checkpoint2.network.EmojiData
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EmojiDao {
@@ -30,4 +28,6 @@ interface EmojiDao {
     @Query("SELECT EXISTS (SELECT * FROM emoji)")
     fun exists(): Boolean
 
+    @Query("SELECT * FROM emoji WHERE emoji_url = :url LIMIT 1 ")
+    fun getEmojiByUrl(url: String): EmojiData
 }

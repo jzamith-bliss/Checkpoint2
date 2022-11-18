@@ -46,7 +46,11 @@ class EmojiManager(private val database: EmojiRoomDatabase) {
         }
     }
 
-
+    suspend fun getEmojiByUrlFromDatabase(url: String): Emoji {
+        return withContext(Dispatchers.IO) {
+            database.emojiDao.getEmojiByUrl(url).asEmoji()
+        }
+    }
 }
 
 

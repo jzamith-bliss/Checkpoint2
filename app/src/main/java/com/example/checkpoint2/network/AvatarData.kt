@@ -18,5 +18,5 @@ data class AvatarData(
     val avatarUrl: String
 )
 
+fun List<AvatarData>.asAvatar(): List<Avatar> { return map { (it.asAvatar()) } }
 fun AvatarData.asAvatar(): Avatar { return Avatar(this.avatarUser , avatarUrl = this.avatarUrl)  }
-fun List<AvatarData>.asAvatar(): List<Avatar> { return map { Avatar(it.avatarUser , avatarUrl = it.avatarUrl)  } }
