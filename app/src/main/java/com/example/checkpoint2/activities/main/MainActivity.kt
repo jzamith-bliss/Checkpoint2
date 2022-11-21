@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import coil.load
+import com.example.checkpoint2.R
 import com.example.checkpoint2.databinding.ActivityMainBinding
 import com.example.checkpoint2.activities.avatarsList.AvatarListActivity
 import com.example.checkpoint2.activities.emojiList.EmojiListActivity
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("CommitPrefEdits")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Checkpoint2)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         viewModel.emojis.observe(this){}

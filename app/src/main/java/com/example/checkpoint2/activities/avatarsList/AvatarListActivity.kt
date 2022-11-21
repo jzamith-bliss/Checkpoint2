@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.checkpoint2.R
 import com.example.checkpoint2.adapter.AdapterAvatar
 import com.example.checkpoint2.databinding.ActivityAvatarListBinding
 import com.example.checkpoint2.model.Avatar
@@ -14,13 +15,16 @@ class AvatarListActivity : AppCompatActivity(), AdapterAvatar.AvatarClickListene
     private lateinit var binding: ActivityAvatarListBinding
     private  lateinit var adapter: AdapterAvatar
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Checkpoint2)
         binding = ActivityAvatarListBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val recyclerView2 = binding.recyclerView
         binding.viewModel = viewModel
+
+        supportActionBar!!.setDefaultDisplayHomeAsUpEnabled(true)
 
         viewModel.initializeAvatarListData { adapter.notifyDataSetChanged() }
 

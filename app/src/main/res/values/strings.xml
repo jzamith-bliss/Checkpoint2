@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">Checkpoint2</string>
+    <string name="app_name">Bliss Emojis</string>
     <string name="google_repos">google repos</string>
     <string name="insert_github_username">insert github username</string>
     <string name="avatar_list">avatar list</string>
     <string name="emoji_list">emoji list</string>
     <string name="random_emoji">random emoji</string>
-    <string name="title_activity_avatar_list">AvatarList</string>
+    <string name="title_activity_avatar_list">Avatar List</string>
+    <string name="title_activity_emoji_list">Emoji List</string>
+    <string name="title_activity_repos_list">Repository List</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

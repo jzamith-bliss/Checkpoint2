@@ -8,6 +8,7 @@ import com.example.checkpoint2.adapter.AdapterRepos
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.checkpoint2.R
 import com.example.checkpoint2.databinding.ActivityGoogleReposBinding
 
 class GoogleReposActivity : AppCompatActivity() {
@@ -18,9 +19,10 @@ class GoogleReposActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGoogleReposBinding
     private lateinit var adapter: AdapterRepos
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint("NotifyDataSetChanged", "RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_Checkpoint2)
         binding = ActivityGoogleReposBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val recyclerView = binding.recyclerView
@@ -28,6 +30,7 @@ class GoogleReposActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(applicationContext)
         val reposLayoutManager = binding.recyclerView.layoutManager as LinearLayoutManager
 
+        supportActionBar!!.setDefaultDisplayHomeAsUpEnabled(true)
 
         viewModel.initializeRepositoryData()
 
