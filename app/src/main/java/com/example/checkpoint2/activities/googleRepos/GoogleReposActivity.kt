@@ -13,7 +13,6 @@ import com.example.checkpoint2.databinding.ActivityGoogleReposBinding
 class GoogleReposActivity : AppCompatActivity() {
 
     private val viewModel: GoogleReposViewModel by lazy {
-        val activity = requireNotNull(this) {}
         ViewModelProvider(this, GoogleReposViewModel.Factory(this.application))[GoogleReposViewModel::class.java]
     }
     private lateinit var binding: ActivityGoogleReposBinding
@@ -64,12 +63,8 @@ class GoogleReposActivity : AppCompatActivity() {
                 val lastVisibleItemIndex: Int = reposLayoutManager.findLastVisibleItemPosition()
                 if (lastVisibleItemIndex == totalItemCount -1) {
                     updateScroll()
-
                 }
-
             }
-
         })
-
     }
 }

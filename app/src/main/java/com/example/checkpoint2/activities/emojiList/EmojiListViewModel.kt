@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 class EmojiListViewModel(application: Application): AndroidViewModel(application) {
 
     private val emojiRepository = EmojiManager(EmojiRoomDatabase.getDatabase(application))
-    val databaseEmojis:LiveData<List<Emoji>> = emojiRepository.emojis
 
     private var _emojiList: MutableList<Emoji> = mutableListOf()
     val emojiList: List<Emoji>
@@ -45,15 +44,5 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
     fun refreshData() {
         _emojiList.clear()
         _emojiList.addAll(persistentEmojiList)
-    }
-
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(EmojiListViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return EmojiListViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
-        }
     }
 }

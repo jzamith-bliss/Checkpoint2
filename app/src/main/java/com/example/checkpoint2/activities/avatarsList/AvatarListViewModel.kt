@@ -1,7 +1,6 @@
 package com.example.checkpoint2.activities.avatarsList
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.checkpoint2.database.AvatarsRoomDatabase
 import com.example.checkpoint2.model.Avatar
@@ -49,16 +48,6 @@ class AvatarListViewModel(application: Application): AndroidViewModel(applicatio
     fun clearAvatars() {
         viewModelScope.launch {
             avatarRepository.clearAvatars()
-        }
-    }
-
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AvatarListViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return AvatarListViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
         }
     }
 }

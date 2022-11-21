@@ -43,6 +43,6 @@ class AvatarListActivity : AppCompatActivity(), AdapterAvatar.AvatarClickListene
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onAvatarClicked(avatar: Avatar) {
-        viewModel.onAvatarItemClick(avatar, { adapter.notifyDataSetChanged() })
+        viewModel.onAvatarItemClick(avatar) { adapter.notifyDataSetChanged() }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.checkpoint2.network
 
-import com.example.checkpoint2.network.AvatarData
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 

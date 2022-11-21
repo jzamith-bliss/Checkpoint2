@@ -2,7 +2,6 @@ package com.example.checkpoint2.network
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.example.checkpoint2.model.Emoji
 
 @Dao
 interface EmojiDao {

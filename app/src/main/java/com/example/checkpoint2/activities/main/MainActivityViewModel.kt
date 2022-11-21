@@ -2,8 +2,6 @@ package com.example.checkpoint2.activities.main
 
 import android.app.Application
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
@@ -12,7 +10,6 @@ import com.example.checkpoint2.repository.EmojiManager
 import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.model.Emoji
-import com.example.checkpoint2.network.asAvatar
 import com.example.checkpoint2.repository.AvatarManager
 import kotlinx.coroutines.launch
 

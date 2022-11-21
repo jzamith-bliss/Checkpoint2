@@ -43,6 +43,6 @@ class EmojiListActivity : AppCompatActivity(),AdapterEmojis.EmojiClickListener {
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onEmojiClicked(emoji: Emoji) {
-        viewModel.onEmojiItemClick(emoji, { adapter.notifyDataSetChanged() })
+        viewModel.onEmojiItemClick(emoji) { adapter.notifyDataSetChanged() }
     }
 }

@@ -17,7 +17,6 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
         return withContext(Dispatchers.IO) {
             database.avatarDao.exists(username)
         }
-       //return getAvatarsData().any { it.avatarUser == username }
     }
 
     private suspend fun getAvatarFromDisk(username: String): Avatar {

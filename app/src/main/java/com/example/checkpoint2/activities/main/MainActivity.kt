@@ -16,8 +16,6 @@ import com.google.android.material.textfield.TextInputLayout
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by lazy {
-        val activity = requireNotNull(this) {}
-        //ViewModelProvider(this, MainViewModel.Factory(activity.application))[MainViewModel::class.java]
         ViewModelProvider(this, MainActivityViewModel.Factory(this.application))[MainActivityViewModel::class.java]
     }
     //private val viewModel: MainActivityViewModel by viewModels()
@@ -50,15 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.initializeMainData(emoji, avatar)
 
-
-
-/*        fun latestImageView() {
-           val emoji = sharedPreferences.getString("currentEmoji","defaultStringIfNothingFound")
-            Log.v("LOG", "emoji $emoji")
-            val avatar = sharedPreferences.getString("currentAvatar","defaultStringIfNothingFound")
-            Log.v("LOG", "avatar $avatar")
-        }*/
-
         //OnClick for roll button
         binding.buttonRandomEmoji.setOnClickListener { onRandomEmoji() }
 
@@ -88,8 +77,6 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent (this, GoogleReposActivity::class.java)
             startActivity(intent)
         }
-
-
     }
 
     private fun onRandomEmoji() {
