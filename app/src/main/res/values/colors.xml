@@ -10,7 +10,9 @@
     <color name="pine_green_700">#396857</color>
     <color name="mint_green_200">#5ae0bf</color>
     <color name="mint_green_700">#0aad8f</color>
+    <color name="mint_background">#39152826</color>
 
+    <color name="grey">#282828</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

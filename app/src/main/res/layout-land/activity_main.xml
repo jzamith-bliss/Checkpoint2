@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/mint_background"
         tools:context="com.example.checkpoint2.activities.main.MainActivity">
 
 
@@ -36,12 +37,18 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="36dp"
             android:text="@string/random_emoji"
+            android:alpha="0.75"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
             app:layout_constraintBottom_toTopOf="@+id/button_emoji_list"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.921"
+            app:strokeColor="?colorPrimaryVariant"
+            app:strokeWidth="2dp"
             tools:ignore="DuplicateSpeakableTextCheck" />
 
         <Button
@@ -49,18 +56,24 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:text="@string/emoji_list"
+            android:alpha="0.75"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.14"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.862" />
+            app:layout_constraintVertical_bias="0.862"
+            app:strokeColor="?colorPrimaryVariant"
+            app:strokeWidth="2dp"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout2"
             android:layout_width="309dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
             app:layout_constraintBottom_toTopOf="@+id/button_avatar_list"
             app:layout_constraintEnd_toStartOf="@+id/floatingActionButton"
             app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -69,6 +82,8 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:alpha="0.75"
+                android:fontFamily="sans-serif-light"
                 android:hint="@string/insert_github_username" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -78,8 +93,11 @@
             android:layout_width="wrap_content"
             android:layout_height="350dp"
             android:clickable="true"
+            android:alpha="0.75"
             android:contentDescription="@string/insert_github_username"
             android:focusable="true"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
             android:layout_marginBottom="180dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,24 +111,36 @@
             android:layout_height="50dp"
             android:layout_marginBottom="36dp"
             android:text="@string/avatar_list"
+            android:alpha="0.75"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
             app:layout_constraintBottom_toTopOf="@+id/button_google_repos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.525"
             app:layout_constraintStart_toEndOf="@+id/button_random_emoji"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.937" />
+            app:layout_constraintVertical_bias="0.937"
+            app:strokeColor="?colorPrimaryVariant"
+            app:strokeWidth="2dp"/>
 
         <Button
             android:id="@+id/button_google_repos"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:text="@string/google_repos"
+            android:alpha="0.75"
+            android:fontFamily="sans-serif-light"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.524"
             app:layout_constraintStart_toEndOf="@+id/button_emoji_list"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.861" />
+            app:layout_constraintVertical_bias="0.861"
+            app:strokeColor="?colorPrimaryVariant"
+            app:strokeWidth="2dp"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
