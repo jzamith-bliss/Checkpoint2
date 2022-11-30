@@ -4,18 +4,18 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import com.example.checkpoint2.adapter.AdapterRepos
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.checkpoint2.R
 import com.example.checkpoint2.databinding.ActivityGoogleReposBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GoogleReposActivity : AppCompatActivity() {
 
-    private val viewModel: GoogleReposViewModel by lazy {
-        ViewModelProvider(this, GoogleReposViewModel.Factory(this.application))[GoogleReposViewModel::class.java]
-    }
+    private val viewModel: GoogleReposViewModel by viewModels()
     private lateinit var binding: ActivityGoogleReposBinding
     private lateinit var adapter: AdapterRepos
 

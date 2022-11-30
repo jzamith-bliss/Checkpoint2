@@ -9,7 +9,9 @@ import com.example.checkpoint2.R
 import com.example.checkpoint2.adapter.AdapterEmojis
 import com.example.checkpoint2.databinding.ActivityEmojiListBinding
 import com.example.checkpoint2.model.Emoji
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EmojiListActivity : AppCompatActivity(),AdapterEmojis.EmojiClickListener {
     private val viewModel: EmojiListViewModel by viewModels()
     private lateinit var binding: ActivityEmojiListBinding

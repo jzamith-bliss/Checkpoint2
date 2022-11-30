@@ -9,7 +9,9 @@ import com.example.checkpoint2.R
 import com.example.checkpoint2.adapter.AdapterAvatar
 import com.example.checkpoint2.databinding.ActivityAvatarListBinding
 import com.example.checkpoint2.model.Avatar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AvatarListActivity : AppCompatActivity(), AdapterAvatar.AvatarClickListener {
     private val viewModel: AvatarListViewModel by viewModels()
     private lateinit var binding: ActivityAvatarListBinding

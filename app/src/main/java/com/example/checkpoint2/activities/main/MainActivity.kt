@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.net.toUri
-import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.example.checkpoint2.R
 import com.example.checkpoint2.databinding.ActivityMainBinding
@@ -13,13 +13,12 @@ import com.example.checkpoint2.activities.avatarsList.AvatarListActivity
 import com.example.checkpoint2.activities.emojiList.EmojiListActivity
 import com.example.checkpoint2.activities.googleRepos.GoogleReposActivity
 import com.google.android.material.textfield.TextInputLayout
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainActivityViewModel by lazy {
-        ViewModelProvider(this, MainActivityViewModel.Factory(this.application))[MainActivityViewModel::class.java]
-    }
-    //private val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
     lateinit var binding: ActivityMainBinding
 
     @SuppressLint("CommitPrefEdits")

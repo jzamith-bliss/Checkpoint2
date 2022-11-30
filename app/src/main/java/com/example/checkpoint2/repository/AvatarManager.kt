@@ -1,12 +1,14 @@
 package com.example.checkpoint2.repository
 
-import com.example.checkpoint2.database.AvatarsRoomDatabase
 import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.network.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AvatarManager(private val database: AvatarsRoomDatabase) {
+@Singleton
+class AvatarManager @Inject constructor(private val avatarDao: AvatarDao) {
 
     suspend fun getAvatar(username: String): Avatar {
         return if (checkAvatarInDisk(username)) {getAvatarFromDisk(username)}
@@ -15,7 +17,7 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
 
     private suspend fun checkAvatarInDisk(username: String): Boolean {
         return withContext(Dispatchers.IO) {
-            database.avatarDao.exists(username)
+            avatarDao.exists(username)
         }
     }
 
@@ -29,25 +31,25 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
 
     private suspend fun insertAvatarInDiskFromNetwork(username: String) {
         withContext(Dispatchers.IO) {
-            database.avatarDao.insert(getAvatarDataFromNetwork(username))
+            avatarDao.insert(getAvatarDataFromNetwork(username))
         }
     }
 
     suspend fun getAvatars(): List<Avatar> {
         return withContext(Dispatchers.IO) {
-            database.avatarDao.getAvatars().map { it.asAvatar() }
+            avatarDao.getAvatars().map { it.asAvatar() }
         }
     }
 
     private suspend fun getAvatarDataFromDisk(username: String): AvatarData {
         return withContext(Dispatchers.IO) {
-            database.avatarDao.getSearchAvatar(username)
+            avatarDao.getSearchAvatar(username)
         }
     }
 
     suspend fun deleteAvatars(username: String) {
         return withContext(Dispatchers.IO) {
-            database.avatarDao.delete(getAvatarDataFromDisk(username))
+            avatarDao.delete(getAvatarDataFromDisk(username))
         }
     }
 
@@ -57,13 +59,13 @@ class AvatarManager(private val database: AvatarsRoomDatabase) {
 
     suspend fun clearAvatars() {
         withContext(Dispatchers.IO) {
-            database.avatarDao.clearAvatars()
+            avatarDao.clearAvatars()
         }
     }
 
     suspend fun getAvatarByUrlFromDatabase(url: String): Avatar {
         return withContext(Dispatchers.IO) {
-            database.avatarDao.getAvatarByUrl(url).asAvatar()
+            avatarDao.getAvatarByUrl(url).asAvatar()
         }
     }
 

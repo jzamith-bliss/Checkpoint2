@@ -1,15 +1,14 @@
 package com.example.checkpoint2.activities.googleRepos
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.example.checkpoint2.database.ReposRoomDatabase
 import com.example.checkpoint2.model.Repos
 import com.example.checkpoint2.repository.ReposManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GoogleReposViewModel(application: Application): AndroidViewModel(application) {
-
-    private val reposRepository = ReposManager(ReposRoomDatabase.getDatabase(application))
+@HiltViewModel
+class GoogleReposViewModel @Inject constructor(private val reposRepository: ReposManager): ViewModel() {
 
     private var currentPage = 0
     private var currentSize = 20
@@ -42,16 +41,6 @@ class GoogleReposViewModel(application: Application): AndroidViewModel(applicati
             currentPage++
             nextRepositoryPosition = (currentPage * currentSize)
             _repos.value = reposRepository.getRepos(currentPage, currentSize)
-        }
-    }
-
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(GoogleReposViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return GoogleReposViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewModel")
         }
     }
 }

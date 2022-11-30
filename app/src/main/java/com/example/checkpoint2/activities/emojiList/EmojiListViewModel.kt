@@ -1,16 +1,15 @@
 package com.example.checkpoint2.activities.emojiList
 
-import android.app.Application
 import androidx.lifecycle.*
 
-import com.example.checkpoint2.database.EmojiRoomDatabase
 import com.example.checkpoint2.model.Emoji
 import com.example.checkpoint2.repository.EmojiManager
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class EmojiListViewModel(application: Application): AndroidViewModel(application) {
-
-    private val emojiRepository = EmojiManager(EmojiRoomDatabase.getDatabase(application))
+@HiltViewModel
+class EmojiListViewModel @Inject constructor(private val emojiRepository: EmojiManager): ViewModel() {
 
     private var _emojiList: MutableList<Emoji> = mutableListOf()
     val emojiList: List<Emoji>
@@ -30,7 +29,6 @@ class EmojiListViewModel(application: Application): AndroidViewModel(application
             }
             catch (e: Exception) {
                 e.printStackTrace()
-                //_status.value = EmojiApiStatus.ERROR
             }
         }
     }
