@@ -1,4 +1,4 @@
-package com.example.checkpoint2.network
+package com.example.checkpoint2.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -18,5 +18,19 @@ data class AvatarData(
     val avatarUrl: String
 )
 
-fun List<AvatarData>.asAvatar(): List<Avatar> { return map { (it.asAvatar()) } }
+//fun List<AvatarData>.asAvatar(): List<Avatar> { return map { (it.asAvatar()) } }
+
 fun AvatarData.asAvatar(): Avatar { return Avatar(this.avatarUser , avatarUrl = this.avatarUrl)  }
+
+
+fun Map<String, Any?>.asAvatarData(): AvatarData {
+    var user = ""
+    var url = ""
+
+    forEach{
+        if (it.key == "login") { user = it.value as String}
+        else if (it.key == "avatar_url") {url = it.value as String}
+    }
+
+    return AvatarData(avatarUrl = url, avatarUser = user)
+}

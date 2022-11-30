@@ -4,9 +4,9 @@ package com.example.checkpoint2.di
 import android.content.Context
 import androidx.room.Room
 import com.example.checkpoint2.database.RoomDatabase
-import com.example.checkpoint2.network.AvatarDao
-import com.example.checkpoint2.network.EmojiDao
-import com.example.checkpoint2.network.ReposDao
+import com.example.checkpoint2.database.AvatarDao
+import com.example.checkpoint2.database.EmojiDao
+import com.example.checkpoint2.database.ReposDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object DatabaseModule {
 
     @Singleton
     @Provides

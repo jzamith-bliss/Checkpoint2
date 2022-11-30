@@ -1,5 +1,9 @@
 package com.example.checkpoint2.repository
 
+import com.example.checkpoint2.data.RepoData
+import com.example.checkpoint2.data.asRepoList
+import com.example.checkpoint2.data.asReposData
+import com.example.checkpoint2.database.ReposDao
 import com.example.checkpoint2.model.Repos
 import com.example.checkpoint2.network.*
 import kotlinx.coroutines.Dispatchers
@@ -8,7 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ReposManager  @Inject constructor(private val reposDao: ReposDao) {
+class ReposManager  @Inject constructor(
+    private val reposDao: ReposDao,
+    private val reposApiService: ReposApiService
+    ) {
 
     suspend fun getRepos(page: Int, size: Int): List<Repos> {
 
@@ -40,7 +47,7 @@ class ReposManager  @Inject constructor(private val reposDao: ReposDao) {
     }
 
     private suspend fun getReposDataFromNetwork(page: Int, size: Int): List<RepoData> {
-        return ReposApi.retrofitService.getRepos("google", page, size).asReposData()
+        return reposApiService.getRepos("google", page, size).asReposData()
     }
 
     private suspend fun getNumberOfRepositories(): Int {
@@ -65,10 +72,10 @@ class ReposManager  @Inject constructor(private val reposDao: ReposDao) {
         }
     }
 
-    suspend fun clearRepos() {
+/*    suspend fun clearRepos() {
         withContext(Dispatchers.IO) {
             reposDao.clearRepos()
         }
-    }
+    }*/
 }
 

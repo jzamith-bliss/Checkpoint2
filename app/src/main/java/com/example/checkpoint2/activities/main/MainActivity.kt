@@ -1,6 +1,6 @@
 package com.example.checkpoint2.activities.main
 
-import android.annotation.SuppressLint
+import    android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

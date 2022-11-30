@@ -1,6 +1,7 @@
-package com.example.checkpoint2.network
+package com.example.checkpoint2.database
 
 import androidx.room.*
+import com.example.checkpoint2.data.AvatarData
 
 @Dao
 interface AvatarDao {

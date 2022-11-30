@@ -1,5 +1,9 @@
 package com.example.checkpoint2.repository
 
+import com.example.checkpoint2.data.AvatarData
+import com.example.checkpoint2.data.asAvatar
+import com.example.checkpoint2.data.asAvatarData
+import com.example.checkpoint2.database.AvatarDao
 import com.example.checkpoint2.model.Avatar
 import com.example.checkpoint2.network.*
 import kotlinx.coroutines.Dispatchers
@@ -8,7 +12,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class AvatarManager @Inject constructor(private val avatarDao: AvatarDao) {
+class AvatarManager @Inject constructor(
+    private val avatarDao: AvatarDao,
+    private val avatarApiService: AvatarApiService
+    ) {
 
     suspend fun getAvatar(username: String): Avatar {
         return if (checkAvatarInDisk(username)) {getAvatarFromDisk(username)}
@@ -54,7 +61,7 @@ class AvatarManager @Inject constructor(private val avatarDao: AvatarDao) {
     }
 
     private suspend fun getAvatarDataFromNetwork(username: String): AvatarData {
-        return AvatarApi.retrofitService.getAvatar(username).asAvatarData()
+        return avatarApiService.getAvatar(username).asAvatarData()
     }
 
     suspend fun clearAvatars() {

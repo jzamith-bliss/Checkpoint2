@@ -1,4 +1,4 @@
-package com.example.checkpoint2.network
+package com.example.checkpoint2.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -21,3 +21,12 @@ data class EmojiData(
 
 fun List<EmojiData>.asEmoji(): List<Emoji> { return map { (it.asEmoji()) } }
 fun EmojiData.asEmoji(): Emoji { return  Emoji(this.emojiName, emojiUrl = this.emojiUrl) }
+
+fun Map<String, String>.asEmojiData(): List<EmojiData> {
+    return map {
+        EmojiData(
+            emojiName = it.key,
+            emojiUrl = it.value
+        )
+    }
+}

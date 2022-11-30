@@ -3,6 +3,10 @@ package com.example.checkpoint2.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import com.example.checkpoint2.data.EmojiData
+import com.example.checkpoint2.data.asEmoji
+import com.example.checkpoint2.data.asEmojiData
+import com.example.checkpoint2.database.EmojiDao
 import com.example.checkpoint2.model.Emoji
 import com.example.checkpoint2.network.*
 import kotlinx.coroutines.Dispatchers
@@ -11,7 +15,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class EmojiManager @Inject constructor(private val emojiDao: EmojiDao) {
+class EmojiManager @Inject constructor(
+    private val emojiDao: EmojiDao,
+    private val emojiApiService: EmojiApiService
+    ) {
 
     val emojis: LiveData<List<Emoji>> =
         Transformations.map(emojiDao.getEmojis()) { it.asEmoji() }
@@ -34,11 +41,11 @@ class EmojiManager @Inject constructor(private val emojiDao: EmojiDao) {
     }
 
     private suspend fun getEmojisFromNetwork(): List<Emoji> {
-        return EmojiApi.retrofitService.getEmojis().asEmojiData().asEmoji()
+        return emojiApiService.getEmojis().asEmojiData().asEmoji()
     }
 
     private suspend fun getEmojisDataFromNetwork(): List<EmojiData> {
-        return EmojiApi.retrofitService.getEmojis().asEmojiData()
+        return emojiApiService.getEmojis().asEmojiData()
     }
 
     private suspend fun insertEmojisInDiskFromNetwork() {

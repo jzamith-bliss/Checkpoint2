@@ -1,7 +1,8 @@
-package com.example.checkpoint2.network
+package com.example.checkpoint2.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.example.checkpoint2.data.RepoData
 
 @Dao
 interface ReposDao {
